@@ -4,8 +4,7 @@ EULAUtility
 Java (Swing) library that requires users to accept a jar-embedded EULA. This is useful when you're distributing jar files 
 without an installer but still want a user to acknowledge a license before using the software. 
 
-Features:
-===========
+* Features: *
 
 * License file is embedded in the jar making standalone jar distributions easy.
 * Supports multiple license files for complex projects.
