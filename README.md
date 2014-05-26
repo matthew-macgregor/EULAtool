@@ -11,7 +11,7 @@ without an installer but still want a user to acknowledge a license before using
 * Adding additional licenses (or new versions) during an update is easy.
 * Small amount of source code makes it easy to integrate .java files directly (or as a jar).
 
-Usage is straightforward:
+**Example Usage:**
 
         /*
         * This is the path to the marker file EULAUtility uses to track whether 
