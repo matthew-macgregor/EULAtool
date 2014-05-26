@@ -31,8 +31,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /** 
  * The code checks for a file located at the provided path. If the file exists
@@ -46,7 +44,6 @@ import java.util.logging.Logger;
 class Marker { //deliberately package-private
 
     public Marker( String path ) {
-        L.setLevel(Level.INFO);
         marker = new HashMap<>();
         this.path = path;
     }
@@ -68,17 +65,10 @@ class Marker { //deliberately package-private
         try {
             read();
         } catch (IOException ex) {
-            L.log(Level.WARNING, null, ex);
             return false;
         }
         
-        if (marker.containsKey(key)) {
-            L.log(Level.INFO, "License agreement has been signed.");
-            return true;
-        } else {
-            L.log(Level.INFO, "License agreement has NOT been signed.");
-            return false;
-        }
+        return marker.containsKey(key);
     }
     
     /**
@@ -90,7 +80,6 @@ class Marker { //deliberately package-private
         try {
             write();
         } catch (IOException ex) {
-            L.log(Level.WARNING, null, ex);
             return false;
         }
         return true;
@@ -160,16 +149,11 @@ class Marker { //deliberately package-private
                 );
                 marker = (HashMap<String, Integer>) ois.readObject();
                 ois.close();
-                L.log(Level.INFO, "Success deserializing EULA object");
             } catch (IOException | ClassNotFoundException e) {
-                L.log(Level.WARNING, "Error deserializing EULA object.");
-                L.log(Level.WARNING, null, e);
                 throw new IOException(e.getMessage());
             }
 
-        } else {
-            L.log(Level.INFO, "EULA file doesn't exist.");
-        }
+        } 
        
     }
 
@@ -193,8 +177,6 @@ class Marker { //deliberately package-private
     }
     /* Path to the marker file. */
     private String path;
-    /* Init our logger. */
-    private static final Logger L = Logger.getLogger(Marker.class.getName());
     /* Individual licenses are identified in a dictionary. */
     private Map<String, Integer> marker;
     /* Constant used to represent acceptance of the EULA. */
