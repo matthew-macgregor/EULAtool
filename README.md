@@ -1,8 +1,9 @@
 EULAUtility
 ===========
 
-Java (Swing) library that requires users to accept a jar-embedded EULA. This is useful when you're distributing jar files 
-without an installer but still want a user to acknowledge a license before using the software. 
+Java (Swing) library that requires users to accept a jar-embedded EULA. This is 
+useful when you're distributing jar files without an installer but still want a 
+user to acknowledge a license before using the software. 
 
 **Features:**
 
@@ -54,38 +55,45 @@ without an installer but still want a user to acknowledge a license before using
         eula.addLicense("eula.main", "/jar/path/to/license.txt");
         eula.start();
         
-The marker file keeps track of which EULA's the user has accepted. It should be in a location that the user has write
-permissions to and generally it's best to keep it with the application's other configuration data. Licenses are tracked
-using the key that you provide to addLicense(key, path). Providing the same key twice will simply override the previous
-license path. 
+The marker file keeps track of which EULA's the user has accepted. It should be 
+in a location that the user has write permissions to and generally it's best to 
+keep it with the application's other configuration data. Licenses are tracked 
+using the key that you provide to addLicense(key, path). Providing the same key 
+twice will simply override the previous license path. 
 
-If you need to specify multiple licenses you may do so by providing new keys. For example:
+If you need to specify multiple licenses you may do so by providing new keys. 
+For example:
 
         addLicense( "gpl", "/gpl.txt" );
         addLicense( "mit", "/mit.txt" );
         
-This will prompt the user with the content of gpl.txt followed by the contents of mit.txt. If the user abandons the 
-process, she will be asked again on the next launch of the application. After accepting all of the licenses, EULAUtility
-commits the information to the marker file. The user will no longer be prompted to accept the licenses on launch of app.
+This will prompt the user with the content of gpl.txt followed by the contents 
+of mit.txt. If the user abandons the process, she will be asked again on the 
+next launch of the application. After accepting all of the licenses, EULAUtility 
+commits the information to the marker file. The user will no longer be prompted 
+to accept the licenses on launch of app.
 
-If you update the jarfile and add a new dependency, it's easy to add a license. Just add another line:
+If you update the jarfile and add a new dependency, it's easy to add a license. 
+Just add another line:
 
         addLicense( "newlicense", "/new.txt" );
         
 The user will be prompted to accept the new license but not the original ones.
 
-The keys used to identify a license are arbitrary and can be used to version the license. For example, version 1 of a jar
-might contain this license:
+The keys used to identify a license are arbitrary and can be used to version the 
+license. For example, version 1 of a jar might contain this license:
 
         addLicense( "license.1", "/license.txt" );
 
-When version 2 rolls around, there's a new license. To reprompt the user, replace the line above with:
+When version 2 rolls around, there's a new license. To reprompt the user, replace 
+the line above with:
 
         addLicense( "license.2", "/license.txt" );
         
-Because the key is now different, the user will be prompted to accept the new license. Please note that it's assumed in 
-this example that the contents of license.txt are now different. You could also provide a new filename, but it's not
-necessary. The library doesn't check the contents of the file so you'll need to tell it to reprompt by changing the
-key.
+Because the key is now different, the user will be prompted to accept the new 
+license. Please note that it's assumed in this example that the contents of 
+license.txt are now different. You could also provide a new filename, but it's 
+not necessary. The library doesn't check the contents of the file so you'll need 
+to tell it to reprompt by changing the key.
 
 
