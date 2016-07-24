@@ -28,14 +28,16 @@ user to acknowledge a license before using the software.
         EULA eula = new Viewer(fullPath, new Launchable() {
 
             @Override
-            public void launchApplication(String[] args) {
-                java.awt.EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Launch your main application here.
-                        new com.myapp.MainForm().setVisible(true);
-                    }
-                });
+            public void launchApplication(boolean isEulaAccepted, String[] args) {
+                if(isEulaAccepted) {
+                    java.awt.EventQueue.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Launch your main application here.
+                            new com.myapp.MainForm().setVisible(true);
+                        }
+                    });
+                }
             }
         }
         );
