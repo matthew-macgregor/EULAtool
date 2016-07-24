@@ -37,7 +37,7 @@ public interface EULA {
      */
     public void start();
     
-        /**
+    /**
      * Adds a license to be displayed to the user.
      *
      * @param key A user-specified string to identify the license. If key
@@ -55,13 +55,13 @@ public interface EULA {
      * @param type The implementation-specific configuration item.
      * @param value The boolean value for the configuration point.
      */
-    public void setConfiguration( int type, boolean value);
+    public void setConfiguration(int type, boolean value);
     
     /**
      * Allows for implementation-specific configuration of colors.
      * @param type
      * @param c 
      */
-    public void setColor( int type, Color c);
+    public void setColor(int type, Color c);
     
 }

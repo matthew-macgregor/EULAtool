@@ -42,8 +42,6 @@ import javax.swing.JOptionPane;
  */
 public class Viewer extends javax.swing.JFrame implements EULA {
 
-
-    
     public class Config {
         public static final int PROGRESS_VISIBLE = 1;
     }
@@ -87,24 +85,22 @@ public class Viewer extends javax.swing.JFrame implements EULA {
      */
     @Override
     public void start() {
-        if (isEulaAccepted()) {
-            launchApplication();
+        if(isEulaAccepted()) {
+            launchApplication(true);
         } else {
-            if (hasLicense()) {
+            if(hasLicense()) {
                 progressBar.setMaximum(licenses.size());
                 setLocationRelativeTo(null);
                 setVisible(true);
                 displayLicense();
-                
             } else {
                 //If there are no licenses registered, assume there's nothing
                 //to sign and let the user in.
-                launchApplication();
+                launchApplication(true);
             }
         }
     }
     
-
 
 //<editor-fold defaultstate="uncollapsed" desc="Configuration options">
 
@@ -262,6 +258,7 @@ public class Viewer extends javax.swing.JFrame implements EULA {
 
     private void buttonDeclineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeclineActionPerformed
         this.dispose();
+        launchApplication(false);
     }//GEN-LAST:event_buttonDeclineActionPerformed
 
     private void buttonAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAcceptActionPerformed
@@ -279,7 +276,7 @@ public class Viewer extends javax.swing.JFrame implements EULA {
     private boolean isEulaAccepted() {
         List<License> unacceptedLicenses = new ArrayList<>();
         //Filter out the licenses that have been accepted
-        for (License l : licenses) {
+        for(License l : licenses) {
             if (marker.isEulaAccepted(l.getKey()) == false) {
                 unacceptedLicenses.add(l);
             }
@@ -297,7 +294,7 @@ public class Viewer extends javax.swing.JFrame implements EULA {
     private void displayLicense() {
         // Check if we're done, launch the application, otherwise prepare
         // the next license.
-        if (hasLicense()) {
+        if(hasLicense()) {
             try {
                 prepareLicense();
             } catch (FileNotFoundException ex) {
@@ -307,16 +304,19 @@ public class Viewer extends javax.swing.JFrame implements EULA {
                         "Error",
                         JOptionPane.ERROR_MESSAGE
                 );
-                dispose();
+                launchApplication(false);
             }
         } else {
-            launchApplication();
+            // If there are no remaining licenses, all have been accepted
+            launchApplication(true);
         }
     }
     
-    private void launchApplication() {
-        app.launchApplication(args);
-        marker.commit();
+    private void launchApplication(boolean isEulaAccepted) {
+        app.launchApplication(isEulaAccepted, args);
+        if(isEulaAccepted) {
+            marker.commit();
+        }
         dispose();
     }
     

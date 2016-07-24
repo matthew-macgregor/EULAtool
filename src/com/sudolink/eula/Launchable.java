@@ -28,6 +28,18 @@ package com.sudolink.eula;
  */
 public interface Launchable {
 
-    public void launchApplication( String[]  args );
+    /**
+     * EULATool provides a dead-simple implementation to show license(s) and
+     * ensuring that the user has accepted them before launching an application.
+     * Upon acceptance of the license(s), EULATool calls this method. Wrap your
+     * application initialization code in the launchApplication() method and
+     * pass parameters from main() and it should require very few changes to 
+     * your application.
+     * 
+     * @param isEulaAccepted True if the EULA has been accepted by the user.
+     * @param args Allows an arbitrary array of arguments as a pass-through. May
+     * be used to pass command-line arguments to the launching application.
+     */
+    public void launchApplication(boolean isEulaAccepted, String[]  args);
 
 }
